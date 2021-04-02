@@ -8,7 +8,13 @@ const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const config = require('config');
 
-const MongoDB_URI = config.get('Dev.dbString')
+const MongoDB_URI = ''
+
+try {
+  MongoDB_URI = config.get('Dev.dbString');
+} catch(err) {
+  console.log(err)
+}
 
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
