@@ -6,11 +6,14 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
-const constants = require('./constants.js')
+const config = require('config');
+
+const MongoDB_URI = config.get('Dev.dbString')
+
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const dbURL = process.env.MONGODB_URI || MONGODB_URI;
+const dbURL = process.env.MONGODB_URI || MongoDB_URI;
 
 const mongooseOptions = {
   useNewUrlParser: true,
