@@ -1,34 +1,32 @@
-"use strict";
-
-var handleError = function handleError(message) {
+const handleError = message => {
   $("#errorMessage").text(message);
   $("#domoMessage").animate({
     width: 'toggle'
   }, 350);
 };
 
-var sendAjax = function sendAjax(action, data) {
+const sendAjax = (action, data) => {
   $.ajax({
     cache: false,
     type: "POST",
     url: action,
     data: data,
     dataType: "json",
-    success: function success(result, status, xhr) {
+    success: (result, status, xhr) => {
       $("#domoMessage").animate({
         width: 'hide'
       }, 350);
       window.location = result.redirect;
     },
-    error: function error(xhr, status, _error) {
-      var messageObj = JSON.parse(xhr.responseText);
+    error: (xhr, status, error) => {
+      const messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
     }
   });
 };
 
-$(document).ready(function () {
-  $("#signupForm").on("submit", function (e) {
+$(document).ready(() => {
+  $("#signupForm").on("submit", e => {
     e.preventDefault();
     $("#domoMessage").animate({
       width: 'hide'
@@ -47,7 +45,7 @@ $(document).ready(function () {
     sendAjax($("#signupForm").attr("action"), $("#signupForm").serialize());
     return false;
   });
-  $("#loginForm").on("submit", function (e) {
+  $("#loginForm").on("submit", e => {
     e.preventDefault();
     $("#domoMessage").animate({
       width: 'hide'
@@ -61,7 +59,7 @@ $(document).ready(function () {
     sendAjax($("#loginForm").attr("action"), $("#loginForm").serialize());
     return false;
   });
-  $("#domoForm").on("submit", function (e) {
+  $("#domoForm").on("submit", e => {
     e.preventDefault();
     $("#domoMessage").animate({
       width: 'hide'
