@@ -22,5 +22,6 @@
         "react"
     ],
     "rules": {
+        "no-underscore-dangle": "warn"
     }
 }
