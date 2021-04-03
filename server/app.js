@@ -6,20 +6,13 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
-const config = require('config');
 
-const MongoDB_URI = ''
-
-try {
-  MongoDB_URI = config.get('Dev.dbString');
-} catch(err) {
-  console.log(err)
-}
-
+// Add variables from .env file for connection string
+const dotenv = require('dotenv').config()
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-const dbURL = process.env.MONGODB_URI || MongoDB_URI;
+const dbURL = process.env.MONGODB_URI || 'mongodb://localhost/DomoMaker';
 
 const mongooseOptions = {
   useNewUrlParser: true,
