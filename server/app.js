@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
+const session = require('express-session');
 
 // Add variables from .env file for connection string
 require('dotenv').config();
@@ -37,6 +38,14 @@ app.use(compression());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
+
+app.use(session({
+  key: 'sessionid',
+  secret: 'Domo Arigato',
+  resave: true,
+  saveUninitalized: true,
+}));
+
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
