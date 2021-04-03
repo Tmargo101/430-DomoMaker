@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 
 // Add variables from .env file for connection string
-const dotenv = require('dotenv').config()
+require('dotenv').config();
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
