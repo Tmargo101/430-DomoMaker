@@ -54,15 +54,11 @@ const signup = (request, response) => {
 
     const newAccount = new Account.AccountModel(accountData);
 
-    const savePromise = newAccount.save();
-
-    savePromise.then(() => {
+    newAccount.save().then(() => {
       request.session.account = Account.AccountModel.toAPI(newAccount);
       return response.json({ redirect: '/maker' });
-    });
-
-    savePromise.catch((err) => {
-      console.log(err);
+    }).catch((err) => {
+      // console.log(err);
       if (err.code === 11000) {
         return response.status(400).json({ error: 'Username already in use' });
       }
