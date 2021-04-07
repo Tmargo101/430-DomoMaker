@@ -37,8 +37,8 @@ const redisCredentials = {
   pass: '',
 };
 
-if (process.env.REDISCLOUD_URI && process.env.REDISCLOUD_PORT && process.env.REDISCLOUD_PASS) {
-  redisCredentials.hostname = process.env.REDISCLOUD_URI;
+if (process.env.REDISCLOUD_URL && process.env.REDISCLOUD_PORT && process.env.REDISCLOUD_PASS) {
+  redisCredentials.hostname = process.env.REDISCLOUD_URL;
   redisCredentials.port = process.env.REDISCLOUD_PORT;
   redisCredentials.pass = process.env.REDISCLOUD_PASS;
 }
