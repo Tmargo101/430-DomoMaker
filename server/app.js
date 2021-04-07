@@ -10,6 +10,7 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 // const url = require('url');
 const redis = require('redis');
+const csrf = require('csurf');
 
 // Add variables from .env file for connection string
 require('dotenv').config();
@@ -53,7 +54,7 @@ const router = require('./router.js');
 const app = express();
 
 app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
-app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
+
 app.use(compression());
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -82,7 +83,21 @@ app.use(session({
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
 app.set('views', `${__dirname}/../views`);
+
+app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
+
+app.disable('x-powered-by');
+
 app.use(cookieParser());
+
+app.use(csrf());
+app.use((err, request, response, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') {
+    return next(err);
+  }
+  console.log('Missing CSRF Token');
+  return false;
+});
 
 router(app);
 

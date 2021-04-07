@@ -13,7 +13,7 @@ const makerPage = (request, response) => {
       console.log(err);
       return response.status(400).json({ error: 'An error occurred.' });
     }
-    return response.render('app', { domos: docs });
+    return response.render('app', { csrfToken: request.csrfToken(), domos: docs });
   });
 };
 
