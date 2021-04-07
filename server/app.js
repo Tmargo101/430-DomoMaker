@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+// const url = require('url');
+const redis = require('redis');
 
 // Add variables from .env file for connection string
 require('dotenv').config();
@@ -28,6 +31,23 @@ mongoose.connect(dbURL, mongooseOptions, (err) => {
   }
 });
 
+const redisCredentials = {
+  hostname: '',
+  port: '',
+  pass: '',
+};
+
+if (process.env.REDISCLOUD_URI && process.env.REDISCLOUD_PORT && process.env.REDISCLOUD_PASS) {
+  redisCredentials.hostname = process.env.REDISCLOUD_URI;
+  redisCredentials.port = process.env.REDISCLOUD_PORT;
+  redisCredentials.pass = process.env.REDISCLOUD_PASS;
+}
+const redisClient = redis.createClient({
+  host: redisCredentials.hostname,
+  port: redisCredentials.port,
+  password: redisCredentials.pass,
+});
+
 const router = require('./router.js');
 
 const app = express();
@@ -39,11 +59,24 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+// app.use(session({
+//   key: 'sessionid',
+//   secret: 'Domo Arigato',
+//   resave: true,
+//   saveUninitalized: true,
+// }));
+
 app.use(session({
   key: 'sessionid',
+  store: new RedisStore({
+    client: redisClient,
+  }),
   secret: 'Domo Arigato',
   resave: true,
   saveUninitalized: true,
+  cookie: {
+    httpOnly: true,
+  },
 }));
 
 app.engine('handlebars', expressHandlebars({ defaultLayout: 'main' }));
