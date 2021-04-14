@@ -6,10 +6,6 @@ const loginPage = (request, response) => {
   response.render('login', { csrfToken: request.csrfToken() });
 };
 
-const signupPage = (request, response) => {
-  response.render('signup', { csrfToken: request.csrfToken() });
-};
-
 const logout = (request, response) => {
   request.session.destroy();
   response.redirect('/');
@@ -71,6 +67,5 @@ module.exports = {
   loginPage,
   login,
   logout,
-  signupPage,
   signup,
 };
