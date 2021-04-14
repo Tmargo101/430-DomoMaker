@@ -63,9 +63,17 @@ const signup = (request, response) => {
   });
 };
 
+const getToken = (request, response) => {
+  const csrfJSON = {
+    csrfToken: request.csrfToken(),
+  };
+  response.json(csrfJSON);
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  getToken,
 };

@@ -8,7 +8,7 @@
   "description": "A Simple Login Example using Node.js, Mongo and Redis",
   "main": "./server/app.js",
   "scripts": {
-    "buildLoginBundle": "babel ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",  
+    "buildLoginBundle": "babel ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
     "watchLoginBundle": "babel --watch ./client/login ./client/helper --presets @babel/preset-react --out-file ./hosted/loginBundle.js",
     "buildAppBundle": "babel ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
     "watchAppBundle": "babel --watch ./client/app ./client/helper --presets @babel/preset-react --out-file ./hosted/bundle.js",
