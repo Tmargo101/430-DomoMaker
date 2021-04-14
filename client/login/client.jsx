@@ -71,3 +71,46 @@ const SignupWindow = (props) => {
     </form>
   );
 };
+
+const createLoginWindow = (csrf) => {
+  ReactDOM.render(
+    <LoginWindow csrf={csrf} />,
+    document.querySelector("#content")
+  );
+};
+
+const createSignupWindow = (csrf) => {
+  ReactDOM.render(
+    <SignupWindow csrf={csrf} />,
+    document.querySelector("#content")
+  );
+};
+
+const setup = (csrf) => {
+  const loginButton = document.querySelector("#loginButton");
+  const signupButton = document.querySelector("#signupButton");
+  
+  loginButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    createLoginWindow(csrf);
+    return false;
+  });
+  signupButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    createSignupWindow(csrf);
+    return false;
+  });
+  
+  // Create default view
+  createLoginWindow(csrf);
+};
+
+const getToken = () => {
+  sendAjax("GET", "/getToken", null, (result) => {
+    setup(result.csrfToken);
+  });
+};
+
+$(document).ready(function() {
+  getToken();
+});
